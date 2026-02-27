@@ -1,0 +1,1171 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/alexisgamz/kevin-osvaldo/blob/main/ACTIVIDAD%203%20DE%20KEVIN%20GAMEZ%20Y%20OSVALDO\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "YHLxNvFNYS60"
+      },
+      "source": [
+        "# **INTRODUCCION A PANDAS**\n",
+        "\n",
+        "1. Instalación de Pandas\n",
+        "\n",
+        "2. Creación de dataframe\n",
+        "\n",
+        "3. Creación de series\n",
+        "\n",
+        "4. Lectura de datasets y exploración dataframe\n",
+        "\n",
+        "5. Escritura de dataframe en csv\n",
+        "\n",
+        "<img src=\"../imgs/foto-dia-01.jpg\" width=\"450px\" height=\"300px\">"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "X3kEetipYS62"
+      },
+      "source": [
+        "### **1. Instalación de Pandas**"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 1,
+      "metadata": {
+        "id": "SlsvF4dMYS62",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "9ef17f6a-19bf-41d5-b414-f6b5e171d3cd"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Requirement already satisfied: pandas in /usr/local/lib/python3.12/dist-packages (2.2.2)\n",
+            "Requirement already satisfied: numpy>=1.26.0 in /usr/local/lib/python3.12/dist-packages (from pandas) (2.0.2)\n",
+            "Requirement already satisfied: python-dateutil>=2.8.2 in /usr/local/lib/python3.12/dist-packages (from pandas) (2.9.0.post0)\n",
+            "Requirement already satisfied: pytz>=2020.1 in /usr/local/lib/python3.12/dist-packages (from pandas) (2025.2)\n",
+            "Requirement already satisfied: tzdata>=2022.7 in /usr/local/lib/python3.12/dist-packages (from pandas) (2025.3)\n",
+            "Requirement already satisfied: six>=1.5 in /usr/local/lib/python3.12/dist-packages (from python-dateutil>=2.8.2->pandas) (1.17.0)\n"
+          ]
+        }
+      ],
+      "source": [
+        "%pip install pandas"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "OZUt7jgmYS63"
+      },
+      "source": [
+        "### **2. Creación de dataframe**\n",
+        "\n",
+        "Hay dos objetos principales en pandas: los **DataFrame** y las **series**.\n",
+        "\n",
+        "Un DataFrame es una tabla. Contiene una matriz de entradas individuales, cada una de las cuales tiene un valor específico. Cada entrada corresponde a una fila (o registro) y una columna."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 2,
+      "metadata": {
+        "id": "sywB230WYS63",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 112
+        },
+        "outputId": "575d4861-b25b-489f-bd61-8aee26de8e82"
+      },
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "   Yes   No\n",
+              "0   50  131\n",
+              "1   21    2"
+            ],
+            "text/html": [
+              "\n",
+              "  <div id=\"df-0f478eab-97b6-43bd-9392-54981b868aac\" class=\"colab-df-container\">\n",
+              "    <div>\n",
+              "<style scoped>\n",
+              "    .dataframe tbody tr th:only-of-type {\n",
+              "        vertical-align: middle;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe tbody tr th {\n",
+              "        vertical-align: top;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe thead th {\n",
+              "        text-align: right;\n",
+              "    }\n",
+              "</style>\n",
+              "<table border=\"1\" class=\"dataframe\">\n",
+              "  <thead>\n",
+              "    <tr style=\"text-align: right;\">\n",
+              "      <th></th>\n",
+              "      <th>Yes</th>\n",
+              "      <th>No</th>\n",
+              "    </tr>\n",
+              "  </thead>\n",
+              "  <tbody>\n",
+              "    <tr>\n",
+              "      <th>0</th>\n",
+              "      <td>50</td>\n",
+              "      <td>131</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>1</th>\n",
+              "      <td>21</td>\n",
+              "      <td>2</td>\n",
+              "    </tr>\n",
+              "  </tbody>\n",
+              "</table>\n",
+              "</div>\n",
+              "    <div class=\"colab-df-buttons\">\n",
+              "\n",
+              "  <div class=\"colab-df-container\">\n",
+              "    <button class=\"colab-df-convert\" onclick=\"convertToInteractive('df-0f478eab-97b6-43bd-9392-54981b868aac')\"\n",
+              "            title=\"Convert this dataframe to an interactive table.\"\n",
+              "            style=\"display:none;\">\n",
+              "\n",
+              "  <svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24px\" viewBox=\"0 -960 960 960\">\n",
+              "    <path d=\"M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z\"/>\n",
+              "  </svg>\n",
+              "    </button>\n",
+              "\n",
+              "  <style>\n",
+              "    .colab-df-container {\n",
+              "      display:flex;\n",
+              "      gap: 12px;\n",
+              "    }\n",
+              "\n",
+              "    .colab-df-convert {\n",
+              "      background-color: #E8F0FE;\n",
+              "      border: none;\n",
+              "      border-radius: 50%;\n",
+              "      cursor: pointer;\n",
+              "      display: none;\n",
+              "      fill: #1967D2;\n",
+              "      height: 32px;\n",
+              "      padding: 0 0 0 0;\n",
+              "      width: 32px;\n",
+              "    }\n",
+              "\n",
+              "    .colab-df-convert:hover {\n",
+              "      background-color: #E2EBFA;\n",
+              "      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);\n",
+              "      fill: #174EA6;\n",
+              "    }\n",
+              "\n",
+              "    .colab-df-buttons div {\n",
+              "      margin-bottom: 4px;\n",
+              "    }\n",
+              "\n",
+              "    [theme=dark] .colab-df-convert {\n",
+              "      background-color: #3B4455;\n",
+              "      fill: #D2E3FC;\n",
+              "    }\n",
+              "\n",
+              "    [theme=dark] .colab-df-convert:hover {\n",
+              "      background-color: #434B5C;\n",
+              "      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);\n",
+              "      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));\n",
+              "      fill: #FFFFFF;\n",
+              "    }\n",
+              "  </style>\n",
+              "\n",
+              "    <script>\n",
+              "      const buttonEl =\n",
+              "        document.querySelector('#df-0f478eab-97b6-43bd-9392-54981b868aac button.colab-df-convert');\n",
+              "      buttonEl.style.display =\n",
+              "        google.colab.kernel.accessAllowed ? 'block' : 'none';\n",
+              "\n",
+              "      async function convertToInteractive(key) {\n",
+              "        const element = document.querySelector('#df-0f478eab-97b6-43bd-9392-54981b868aac');\n",
+              "        const dataTable =\n",
+              "          await google.colab.kernel.invokeFunction('convertToInteractive',\n",
+              "                                                    [key], {});\n",
+              "        if (!dataTable) return;\n",
+              "\n",
+              "        const docLinkHtml = 'Like what you see? Visit the ' +\n",
+              "          '<a target=\"_blank\" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'\n",
+              "          + ' to learn more about interactive tables.';\n",
+              "        element.innerHTML = '';\n",
+              "        dataTable['output_type'] = 'display_data';\n",
+              "        await google.colab.output.renderOutput(dataTable, element);\n",
+              "        const docLink = document.createElement('div');\n",
+              "        docLink.innerHTML = docLinkHtml;\n",
+              "        element.appendChild(docLink);\n",
+              "      }\n",
+              "    </script>\n",
+              "  </div>\n",
+              "\n",
+              "\n",
+              "    </div>\n",
+              "  </div>\n"
+            ],
+            "application/vnd.google.colaboratory.intrinsic+json": {
+              "type": "dataframe",
+              "summary": "{\n  \"name\": \"pd\",\n  \"rows\": 2,\n  \"fields\": [\n    {\n      \"column\": \"Yes\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 20,\n        \"min\": 21,\n        \"max\": 50,\n        \"num_unique_values\": 2,\n        \"samples\": [\n          21,\n          50\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"No\",\n      \"properties\": {\n        \"dtype\": \"number\",\n        \"std\": 91,\n        \"min\": 2,\n        \"max\": 131,\n        \"num_unique_values\": 2,\n        \"samples\": [\n          2,\n          131\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    }\n  ]\n}"
+            }
+          },
+          "metadata": {},
+          "execution_count": 2
+        }
+      ],
+      "source": [
+        "import pandas as pd\n",
+        "\n",
+        "pd.DataFrame({'Yes': [50, 21], 'No': [131, 2]})"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "-huRq6LaYS64"
+      },
+      "source": [
+        "En este ejemplo, la entrada \"0, No\" tiene el valor de 131. La entrada \"0, Yes\" tiene un valor de 50, y así sucesivamente.\n",
+        "\n",
+        "Las entradas de un DataFrame no están limitadas a enteros. Por ejemplo, aquí hay un DataFrame cuyos valores son cadenas de texto:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 3,
+      "metadata": {
+        "id": "AmgSgaOKYS64",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 112
+        },
+        "outputId": "4ffc08c4-1471-4a84-f4c2-a8ceed998a5e"
+      },
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "          Bob            Sue\n",
+              "0   Me gusta.      Muy bien.\n",
+              "1  Horroroso.  Un poco soso."
+            ],
+            "text/html": [
+              "\n",
+              "  <div id=\"df-98df5d0d-e354-429e-8e5f-437f6014e34c\" class=\"colab-df-container\">\n",
+              "    <div>\n",
+              "<style scoped>\n",
+              "    .dataframe tbody tr th:only-of-type {\n",
+              "        vertical-align: middle;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe tbody tr th {\n",
+              "        vertical-align: top;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe thead th {\n",
+              "        text-align: right;\n",
+              "    }\n",
+              "</style>\n",
+              "<table border=\"1\" class=\"dataframe\">\n",
+              "  <thead>\n",
+              "    <tr style=\"text-align: right;\">\n",
+              "      <th></th>\n",
+              "      <th>Bob</th>\n",
+              "      <th>Sue</th>\n",
+              "    </tr>\n",
+              "  </thead>\n",
+              "  <tbody>\n",
+              "    <tr>\n",
+              "      <th>0</th>\n",
+              "      <td>Me gusta.</td>\n",
+              "      <td>Muy bien.</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>1</th>\n",
+              "      <td>Horroroso.</td>\n",
+              "      <td>Un poco soso.</td>\n",
+              "    </tr>\n",
+              "  </tbody>\n",
+              "</table>\n",
+              "</div>\n",
+              "    <div class=\"colab-df-buttons\">\n",
+              "\n",
+              "  <div class=\"colab-df-container\">\n",
+              "    <button class=\"colab-df-convert\" onclick=\"convertToInteractive('df-98df5d0d-e354-429e-8e5f-437f6014e34c')\"\n",
+              "            title=\"Convert this dataframe to an interactive table.\"\n",
+              "            style=\"display:none;\">\n",
+              "\n",
+              "  <svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24px\" viewBox=\"0 -960 960 960\">\n",
+              "    <path d=\"M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z\"/>\n",
+              "  </svg>\n",
+              "    </button>\n",
+              "\n",
+              "  <style>\n",
+              "    .colab-df-container {\n",
+              "      display:flex;\n",
+              "      gap: 12px;\n",
+              "    }\n",
+              "\n",
+              "    .colab-df-convert {\n",
+              "      background-color: #E8F0FE;\n",
+              "      border: none;\n",
+              "      border-radius: 50%;\n",
+              "      cursor: pointer;\n",
+              "      display: none;\n",
+              "      fill: #1967D2;\n",
+              "      height: 32px;\n",
+              "      padding: 0 0 0 0;\n",
+              "      width: 32px;\n",
+              "    }\n",
+              "\n",
+              "    .colab-df-convert:hover {\n",
+              "      background-color: #E2EBFA;\n",
+              "      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);\n",
+              "      fill: #174EA6;\n",
+              "    }\n",
+              "\n",
+              "    .colab-df-buttons div {\n",
+              "      margin-bottom: 4px;\n",
+              "    }\n",
+              "\n",
+              "    [theme=dark] .colab-df-convert {\n",
+              "      background-color: #3B4455;\n",
+              "      fill: #D2E3FC;\n",
+              "    }\n",
+              "\n",
+              "    [theme=dark] .colab-df-convert:hover {\n",
+              "      background-color: #434B5C;\n",
+              "      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);\n",
+              "      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));\n",
+              "      fill: #FFFFFF;\n",
+              "    }\n",
+              "  </style>\n",
+              "\n",
+              "    <script>\n",
+              "      const buttonEl =\n",
+              "        document.querySelector('#df-98df5d0d-e354-429e-8e5f-437f6014e34c button.colab-df-convert');\n",
+              "      buttonEl.style.display =\n",
+              "        google.colab.kernel.accessAllowed ? 'block' : 'none';\n",
+              "\n",
+              "      async function convertToInteractive(key) {\n",
+              "        const element = document.querySelector('#df-98df5d0d-e354-429e-8e5f-437f6014e34c');\n",
+              "        const dataTable =\n",
+              "          await google.colab.kernel.invokeFunction('convertToInteractive',\n",
+              "                                                    [key], {});\n",
+              "        if (!dataTable) return;\n",
+              "\n",
+              "        const docLinkHtml = 'Like what you see? Visit the ' +\n",
+              "          '<a target=\"_blank\" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'\n",
+              "          + ' to learn more about interactive tables.';\n",
+              "        element.innerHTML = '';\n",
+              "        dataTable['output_type'] = 'display_data';\n",
+              "        await google.colab.output.renderOutput(dataTable, element);\n",
+              "        const docLink = document.createElement('div');\n",
+              "        docLink.innerHTML = docLinkHtml;\n",
+              "        element.appendChild(docLink);\n",
+              "      }\n",
+              "    </script>\n",
+              "  </div>\n",
+              "\n",
+              "\n",
+              "    </div>\n",
+              "  </div>\n"
+            ],
+            "application/vnd.google.colaboratory.intrinsic+json": {
+              "type": "dataframe",
+              "summary": "{\n  \"name\": \"pd\",\n  \"rows\": 2,\n  \"fields\": [\n    {\n      \"column\": \"Bob\",\n      \"properties\": {\n        \"dtype\": \"string\",\n        \"num_unique_values\": 2,\n        \"samples\": [\n          \"Horroroso.\",\n          \"Me gusta.\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"Sue\",\n      \"properties\": {\n        \"dtype\": \"string\",\n        \"num_unique_values\": 2,\n        \"samples\": [\n          \"Un poco soso.\",\n          \"Muy bien.\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    }\n  ]\n}"
+            }
+          },
+          "metadata": {},
+          "execution_count": 3
+        }
+      ],
+      "source": [
+        "pd.DataFrame({'Bob': ['Me gusta.', 'Horroroso.'], 'Sue': ['Muy bien.', 'Un poco soso.']})"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "KoBmupSFYS64"
+      },
+      "source": [
+        "Estamos utilizando el constructor pd.DataFrame() para generar estos objetos DataFrame. La sintaxis para declarar uno nuevo es un diccionario cuyas claves son los nombres de las columnas (Bob y Sue en este ejemplo), y cuyos valores son una lista de entradas. Esta es la forma estándar de construir un nuevo DataFrame, y es la que es más probable que encuentres.\n",
+        "\n",
+        "El constructor de diccionario-lista asigna valores a las etiquetas de las columnas, pero solo utiliza un conteo ascendente desde 0 (0, 1, 2, 3, ...) para las etiquetas de las filas. A veces esto está bien, pero muchas veces querremos asignar estas etiquetas nosotros mismos.\n",
+        "\n",
+        "La lista de etiquetas de fila utilizada en un DataFrame se conoce como un Índice. Podemos asignar valores a este utilizando un parámetro de índice en nuestro constructor:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 4,
+      "metadata": {
+        "id": "E9xpOuoaYS64",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 112
+        },
+        "outputId": "9a6ba74a-c26d-4e75-9b5c-aa5dcf423966"
+      },
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "                   Bob            Sue\n",
+              "Producto A   Me gusta.      Muy bien.\n",
+              "Producto B  Horroroso.  Un poco soso."
+            ],
+            "text/html": [
+              "\n",
+              "  <div id=\"df-c07c6e87-7e57-4538-ac91-15d8cfd2c1eb\" class=\"colab-df-container\">\n",
+              "    <div>\n",
+              "<style scoped>\n",
+              "    .dataframe tbody tr th:only-of-type {\n",
+              "        vertical-align: middle;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe tbody tr th {\n",
+              "        vertical-align: top;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe thead th {\n",
+              "        text-align: right;\n",
+              "    }\n",
+              "</style>\n",
+              "<table border=\"1\" class=\"dataframe\">\n",
+              "  <thead>\n",
+              "    <tr style=\"text-align: right;\">\n",
+              "      <th></th>\n",
+              "      <th>Bob</th>\n",
+              "      <th>Sue</th>\n",
+              "    </tr>\n",
+              "  </thead>\n",
+              "  <tbody>\n",
+              "    <tr>\n",
+              "      <th>Producto A</th>\n",
+              "      <td>Me gusta.</td>\n",
+              "      <td>Muy bien.</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>Producto B</th>\n",
+              "      <td>Horroroso.</td>\n",
+              "      <td>Un poco soso.</td>\n",
+              "    </tr>\n",
+              "  </tbody>\n",
+              "</table>\n",
+              "</div>\n",
+              "    <div class=\"colab-df-buttons\">\n",
+              "\n",
+              "  <div class=\"colab-df-container\">\n",
+              "    <button class=\"colab-df-convert\" onclick=\"convertToInteractive('df-c07c6e87-7e57-4538-ac91-15d8cfd2c1eb')\"\n",
+              "            title=\"Convert this dataframe to an interactive table.\"\n",
+              "            style=\"display:none;\">\n",
+              "\n",
+              "  <svg xmlns=\"http://www.w3.org/2000/svg\" height=\"24px\" viewBox=\"0 -960 960 960\">\n",
+              "    <path d=\"M120-120v-720h720v720H120Zm60-500h600v-160H180v160Zm220 220h160v-160H400v160Zm0 220h160v-160H400v160ZM180-400h160v-160H180v160Zm440 0h160v-160H620v160ZM180-180h160v-160H180v160Zm440 0h160v-160H620v160Z\"/>\n",
+              "  </svg>\n",
+              "    </button>\n",
+              "\n",
+              "  <style>\n",
+              "    .colab-df-container {\n",
+              "      display:flex;\n",
+              "      gap: 12px;\n",
+              "    }\n",
+              "\n",
+              "    .colab-df-convert {\n",
+              "      background-color: #E8F0FE;\n",
+              "      border: none;\n",
+              "      border-radius: 50%;\n",
+              "      cursor: pointer;\n",
+              "      display: none;\n",
+              "      fill: #1967D2;\n",
+              "      height: 32px;\n",
+              "      padding: 0 0 0 0;\n",
+              "      width: 32px;\n",
+              "    }\n",
+              "\n",
+              "    .colab-df-convert:hover {\n",
+              "      background-color: #E2EBFA;\n",
+              "      box-shadow: 0px 1px 2px rgba(60, 64, 67, 0.3), 0px 1px 3px 1px rgba(60, 64, 67, 0.15);\n",
+              "      fill: #174EA6;\n",
+              "    }\n",
+              "\n",
+              "    .colab-df-buttons div {\n",
+              "      margin-bottom: 4px;\n",
+              "    }\n",
+              "\n",
+              "    [theme=dark] .colab-df-convert {\n",
+              "      background-color: #3B4455;\n",
+              "      fill: #D2E3FC;\n",
+              "    }\n",
+              "\n",
+              "    [theme=dark] .colab-df-convert:hover {\n",
+              "      background-color: #434B5C;\n",
+              "      box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.15);\n",
+              "      filter: drop-shadow(0px 1px 2px rgba(0, 0, 0, 0.3));\n",
+              "      fill: #FFFFFF;\n",
+              "    }\n",
+              "  </style>\n",
+              "\n",
+              "    <script>\n",
+              "      const buttonEl =\n",
+              "        document.querySelector('#df-c07c6e87-7e57-4538-ac91-15d8cfd2c1eb button.colab-df-convert');\n",
+              "      buttonEl.style.display =\n",
+              "        google.colab.kernel.accessAllowed ? 'block' : 'none';\n",
+              "\n",
+              "      async function convertToInteractive(key) {\n",
+              "        const element = document.querySelector('#df-c07c6e87-7e57-4538-ac91-15d8cfd2c1eb');\n",
+              "        const dataTable =\n",
+              "          await google.colab.kernel.invokeFunction('convertToInteractive',\n",
+              "                                                    [key], {});\n",
+              "        if (!dataTable) return;\n",
+              "\n",
+              "        const docLinkHtml = 'Like what you see? Visit the ' +\n",
+              "          '<a target=\"_blank\" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'\n",
+              "          + ' to learn more about interactive tables.';\n",
+              "        element.innerHTML = '';\n",
+              "        dataTable['output_type'] = 'display_data';\n",
+              "        await google.colab.output.renderOutput(dataTable, element);\n",
+              "        const docLink = document.createElement('div');\n",
+              "        docLink.innerHTML = docLinkHtml;\n",
+              "        element.appendChild(docLink);\n",
+              "      }\n",
+              "    </script>\n",
+              "  </div>\n",
+              "\n",
+              "\n",
+              "    </div>\n",
+              "  </div>\n"
+            ],
+            "application/vnd.google.colaboratory.intrinsic+json": {
+              "type": "dataframe",
+              "summary": "{\n  \"name\": \"             index=['Producto A', 'Producto B'])\",\n  \"rows\": 2,\n  \"fields\": [\n    {\n      \"column\": \"Bob\",\n      \"properties\": {\n        \"dtype\": \"string\",\n        \"num_unique_values\": 2,\n        \"samples\": [\n          \"Horroroso.\",\n          \"Me gusta.\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    },\n    {\n      \"column\": \"Sue\",\n      \"properties\": {\n        \"dtype\": \"string\",\n        \"num_unique_values\": 2,\n        \"samples\": [\n          \"Un poco soso.\",\n          \"Muy bien.\"\n        ],\n        \"semantic_type\": \"\",\n        \"description\": \"\"\n      }\n    }\n  ]\n}"
+            }
+          },
+          "metadata": {},
+          "execution_count": 4
+        }
+      ],
+      "source": [
+        "pd.DataFrame({'Bob': ['Me gusta.', 'Horroroso.'], 'Sue': ['Muy bien.', 'Un poco soso.']},\n",
+        "             index=['Producto A', 'Producto B'])"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "Y5oTgEQ9YS64"
+      },
+      "source": [
+        "### **3. Series**\n",
+        "\n",
+        "Por otro lado, una Serie es una secuencia de valores de datos. Si un DataFrame es una tabla, una Serie es una lista. De hecho, puedes crear una Serie con nada más que una lista:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 5,
+      "metadata": {
+        "id": "ZeBJG76hYS65",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 241
+        },
+        "outputId": "fb0e6fff-4ede-4b5c-e84e-c6fbe692fee8"
+      },
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "0    1\n",
+              "1    2\n",
+              "2    3\n",
+              "3    4\n",
+              "4    5\n",
+              "dtype: int64"
+            ],
+            "text/html": [
+              "<div>\n",
+              "<style scoped>\n",
+              "    .dataframe tbody tr th:only-of-type {\n",
+              "        vertical-align: middle;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe tbody tr th {\n",
+              "        vertical-align: top;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe thead th {\n",
+              "        text-align: right;\n",
+              "    }\n",
+              "</style>\n",
+              "<table border=\"1\" class=\"dataframe\">\n",
+              "  <thead>\n",
+              "    <tr style=\"text-align: right;\">\n",
+              "      <th></th>\n",
+              "      <th>0</th>\n",
+              "    </tr>\n",
+              "  </thead>\n",
+              "  <tbody>\n",
+              "    <tr>\n",
+              "      <th>0</th>\n",
+              "      <td>1</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>1</th>\n",
+              "      <td>2</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>2</th>\n",
+              "      <td>3</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>3</th>\n",
+              "      <td>4</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>4</th>\n",
+              "      <td>5</td>\n",
+              "    </tr>\n",
+              "  </tbody>\n",
+              "</table>\n",
+              "</div><br><label><b>dtype:</b> int64</label>"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 5
+        }
+      ],
+      "source": [
+        "pd.Series([1, 2, 3, 4, 5])"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "tBpV5M20YS65"
+      },
+      "source": [
+        "Una Serie es, en esencia, una única columna de un DataFrame. Por lo tanto, puedes asignar etiquetas de fila a la Serie de la misma manera que antes, utilizando un parámetro de índice. Sin embargo, una Serie no tiene un nombre de columna, solo tiene un nombre general:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 6,
+      "metadata": {
+        "id": "Y1wYGFwTYS65",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 178
+        },
+        "outputId": "8c1a9d9e-095e-4420-a5d2-d3d1e27b919f"
+      },
+      "outputs": [
+        {
+          "output_type": "execute_result",
+          "data": {
+            "text/plain": [
+              "Ventas 2015    30\n",
+              "Ventas 2016    35\n",
+              "Ventas 2017    40\n",
+              "Name: Producto A, dtype: int64"
+            ],
+            "text/html": [
+              "<div>\n",
+              "<style scoped>\n",
+              "    .dataframe tbody tr th:only-of-type {\n",
+              "        vertical-align: middle;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe tbody tr th {\n",
+              "        vertical-align: top;\n",
+              "    }\n",
+              "\n",
+              "    .dataframe thead th {\n",
+              "        text-align: right;\n",
+              "    }\n",
+              "</style>\n",
+              "<table border=\"1\" class=\"dataframe\">\n",
+              "  <thead>\n",
+              "    <tr style=\"text-align: right;\">\n",
+              "      <th></th>\n",
+              "      <th>Producto A</th>\n",
+              "    </tr>\n",
+              "  </thead>\n",
+              "  <tbody>\n",
+              "    <tr>\n",
+              "      <th>Ventas 2015</th>\n",
+              "      <td>30</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>Ventas 2016</th>\n",
+              "      <td>35</td>\n",
+              "    </tr>\n",
+              "    <tr>\n",
+              "      <th>Ventas 2017</th>\n",
+              "      <td>40</td>\n",
+              "    </tr>\n",
+              "  </tbody>\n",
+              "</table>\n",
+              "</div><br><label><b>dtype:</b> int64</label>"
+            ]
+          },
+          "metadata": {},
+          "execution_count": 6
+        }
+      ],
+      "source": [
+        "pd.Series([30, 35, 40], index=['Ventas 2015', 'Ventas 2016', 'Ventas 2017'], name='Producto A')"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "PilUoyUtYS65"
+      },
+      "source": [
+        "La Serie y el DataFrame están íntimamente relacionados. Es útil pensar en un DataFrame como simplemente un conjunto de Series. Veremos más de esto en el curso."
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "GBURftnCYS65"
+      },
+      "source": [
+        "### **4. Lectura de datasets**\n",
+        "\n",
+        "Poder crear un DataFrame o una Serie manualmente es útil. Pero, la mayoría de las veces, en realidad no estaremos creando nuestros propios datos manualmente. En cambio, estaremos trabajando con datos que ya existen.\n",
+        "\n",
+        "Los datos pueden almacenarse en cualquiera de una serie de formas y formatos diferentes. Por mucho, el más básico de estos es el humilde archivo CSV. Cuando abres un archivo CSV, obtienes algo que se ve así:\n",
+        "\n",
+        "Producto A,Producto B,Producto C,\n",
+        "- 30,21,9,\n",
+        "- 35,34,1,\n",
+        "- 41,11,11\n",
+        "\n",
+        "\n",
+        "Entonces, un archivo CSV es una tabla de valores separados por comas. De ahí el nombre: \"Comma-Separated Values\", o CSV.\n",
+        "\n",
+        "Ahora, dejemos de lado nuestros conjuntos de datos de juguete y veamos cómo se ve un conjunto de datos real cuando lo leemos en un DataFrame. Usaremos la función **pd.read_csv()** para leer los datos en un DataFrame. Esto se hace de la siguiente manera:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 7,
+      "metadata": {
+        "id": "oQoXfbgwYS65",
+        "colab": {
+          "base_uri": "https://localhost:8080/",
+          "height": 304
+        },
+        "outputId": "4327907c-3306-4b7d-bec9-719b594c9da3"
+      },
+      "outputs": [
+        {
+          "output_type": "error",
+          "ename": "FileNotFoundError",
+          "evalue": "[Errno 2] No such file or directory: 'datasets/ryanair_reviews.csv'",
+          "traceback": [
+            "\u001b[0;31m---------------------------------------------------------------------------\u001b[0m",
+            "\u001b[0;31mFileNotFoundError\u001b[0m                         Traceback (most recent call last)",
+            "\u001b[0;32m/tmp/ipython-input-181/3631067492.py\u001b[0m in \u001b[0;36m<cell line: 0>\u001b[0;34m()\u001b[0m\n\u001b[0;32m----> 1\u001b[0;31m \u001b[0mryanair_reviews\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mpd\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mread_csv\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0;34m\"datasets/ryanair_reviews.csv\"\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m",
+            "\u001b[0;32m/usr/local/lib/python3.12/dist-packages/pandas/io/parsers/readers.py\u001b[0m in \u001b[0;36mread_csv\u001b[0;34m(filepath_or_buffer, sep, delimiter, header, names, index_col, usecols, dtype, engine, converters, true_values, false_values, skipinitialspace, skiprows, skipfooter, nrows, na_values, keep_default_na, na_filter, verbose, skip_blank_lines, parse_dates, infer_datetime_format, keep_date_col, date_parser, date_format, dayfirst, cache_dates, iterator, chunksize, compression, thousands, decimal, lineterminator, quotechar, quoting, doublequote, escapechar, comment, encoding, encoding_errors, dialect, on_bad_lines, delim_whitespace, low_memory, memory_map, float_precision, storage_options, dtype_backend)\u001b[0m\n\u001b[1;32m   1024\u001b[0m     \u001b[0mkwds\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mupdate\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mkwds_defaults\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m   1025\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m-> 1026\u001b[0;31m     \u001b[0;32mreturn\u001b[0m \u001b[0m_read\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mfilepath_or_buffer\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mkwds\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m   1027\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m   1028\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.12/dist-packages/pandas/io/parsers/readers.py\u001b[0m in \u001b[0;36m_read\u001b[0;34m(filepath_or_buffer, kwds)\u001b[0m\n\u001b[1;32m    618\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    619\u001b[0m     \u001b[0;31m# Create the parser.\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 620\u001b[0;31m     \u001b[0mparser\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mTextFileReader\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mfilepath_or_buffer\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0;34m**\u001b[0m\u001b[0mkwds\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m    621\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    622\u001b[0m     \u001b[0;32mif\u001b[0m \u001b[0mchunksize\u001b[0m \u001b[0;32mor\u001b[0m \u001b[0miterator\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.12/dist-packages/pandas/io/parsers/readers.py\u001b[0m in \u001b[0;36m__init__\u001b[0;34m(self, f, engine, **kwds)\u001b[0m\n\u001b[1;32m   1618\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m   1619\u001b[0m         \u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mhandles\u001b[0m\u001b[0;34m:\u001b[0m \u001b[0mIOHandles\u001b[0m \u001b[0;34m|\u001b[0m \u001b[0;32mNone\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0;32mNone\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m-> 1620\u001b[0;31m         \u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0m_engine\u001b[0m \u001b[0;34m=\u001b[0m \u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0m_make_engine\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mf\u001b[0m\u001b[0;34m,\u001b[0m \u001b[0mself\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mengine\u001b[0m\u001b[0;34m)\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0m\u001b[1;32m   1621\u001b[0m \u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m   1622\u001b[0m     \u001b[0;32mdef\u001b[0m \u001b[0mclose\u001b[0m\u001b[0;34m(\u001b[0m\u001b[0mself\u001b[0m\u001b[0;34m)\u001b[0m \u001b[0;34m->\u001b[0m \u001b[0;32mNone\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.12/dist-packages/pandas/io/parsers/readers.py\u001b[0m in \u001b[0;36m_make_engine\u001b[0;34m(self, f, engine)\u001b[0m\n\u001b[1;32m   1878\u001b[0m                 \u001b[0;32mif\u001b[0m \u001b[0;34m\"b\"\u001b[0m \u001b[0;32mnot\u001b[0m \u001b[0;32min\u001b[0m \u001b[0mmode\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m   1879\u001b[0m                     \u001b[0mmode\u001b[0m \u001b[0;34m+=\u001b[0m \u001b[0;34m\"b\"\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m-> 1880\u001b[0;31m             self.handles = get_handle(\n\u001b[0m\u001b[1;32m   1881\u001b[0m                 \u001b[0mf\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m   1882\u001b[0m                 \u001b[0mmode\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;32m/usr/local/lib/python3.12/dist-packages/pandas/io/common.py\u001b[0m in \u001b[0;36mget_handle\u001b[0;34m(path_or_buf, mode, encoding, compression, memory_map, is_text, errors, storage_options)\u001b[0m\n\u001b[1;32m    871\u001b[0m         \u001b[0;32mif\u001b[0m \u001b[0mioargs\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mencoding\u001b[0m \u001b[0;32mand\u001b[0m \u001b[0;34m\"b\"\u001b[0m \u001b[0;32mnot\u001b[0m \u001b[0;32min\u001b[0m \u001b[0mioargs\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mmode\u001b[0m\u001b[0;34m:\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    872\u001b[0m             \u001b[0;31m# Encoding\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[0;32m--> 873\u001b[0;31m             handle = open(\n\u001b[0m\u001b[1;32m    874\u001b[0m                 \u001b[0mhandle\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n\u001b[1;32m    875\u001b[0m                 \u001b[0mioargs\u001b[0m\u001b[0;34m.\u001b[0m\u001b[0mmode\u001b[0m\u001b[0;34m,\u001b[0m\u001b[0;34m\u001b[0m\u001b[0;34m\u001b[0m\u001b[0m\n",
+            "\u001b[0;31mFileNotFoundError\u001b[0m: [Errno 2] No such file or directory: 'datasets/ryanair_reviews.csv'"
+          ]
+        }
+      ],
+      "source": [
+        "ryanair_reviews = pd.read_csv(\"datasets/ryanair_reviews.csv\")"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "n82GC4skYS66"
+      },
+      "source": [
+        "Podemos usar el atributo shape para verificar cuán grande es el DataFrame resultante:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "EKQCgIEmYS66"
+      },
+      "outputs": [],
+      "source": [
+        "ryanair_reviews.shape"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "ysyZbfzRYS66"
+      },
+      "source": [
+        "Entonces, nuestro nuevo DataFrame tiene 2249 registros divididos en 21 columnas diferentes.\n",
+        "\n",
+        "Podemos examinar el contenido del DataFrame resultante usando el comando head(), que toma las primeras cinco filas:"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "P7Z70a2cYS66"
+      },
+      "outputs": [],
+      "source": [
+        "ryanair_reviews.head()"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "JVqdXMLcYS66"
+      },
+      "source": [
+        "La función pd.read_csv() es muy amplica, con más de 30 parámetros opcionales que puedes especificar. Por ejemplo, puedes ver en este conjunto de datos que el archivo CSV tiene un índice incorporado, que pandas no recogió automáticamente. Para hacer que pandas use esa columna como índice (en lugar de crear uno nuevo desde cero), podemos especificar un index_col para que tome el index desde una columna, en este caso va a tomar el index de cada fila de la primera columna del dataset y esta no lo va a mostrar."
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "UG2q8V4ZYS66"
+      },
+      "outputs": [],
+      "source": [
+        "ryanair_reviews = pd.read_csv(\"datasets/ryanair_reviews.csv\", index_col=0)\n",
+        "ryanair_reviews.head()"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "2p0PXE4OYS66"
+      },
+      "source": [
+        "### **5. Escritura de dataframe en csv**\n",
+        "\n",
+        "Una vez que leemos un dataframe y aplicamos transformaciones en los datos sobre él, es interesante volver a escribirlo con dichas modificaciones para guardarlo y usarlo en un futuro o poder compartir nuestro trabajo, para eso existe el método **to_csv()**"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": null,
+      "metadata": {
+        "id": "hWSyndY4YS66"
+      },
+      "outputs": [],
+      "source": [
+        "ryanair_reviews.to_csv('datasets/ryanair_reviews_modified.csv')"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "# Actividad practica 1"
+      ],
+      "metadata": {
+        "id": "gMwNLyf7Y2DG"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# ==========================================\n",
+        "# INTRODUCCIÓN A PANDAS - GUÍA COMPLETA\n",
+        "# ==========================================\n",
+        "\n",
+        "# 1. Instalación y Carga\n",
+        "# En Colab, pandas ya viene instalado, pero esta es la forma de forzarlo:\n",
+        "%pip install pandas\n",
+        "\n",
+        "import pandas as pd\n",
+        "import numpy as np\n",
+        "\n",
+        "# ------------------------------------------\n",
+        "# 2. Creación de DataFrame\n",
+        "# ------------------------------------------\n",
+        "print(\"--- Creando DataFrames ---\")\n",
+        "\n",
+        "# Diccionario simple\n",
+        "df_simple = pd.DataFrame({'Yes': [50, 21], 'No': [131, 2]})\n",
+        "print(\"DF Simple:\\n\", df_simple)\n",
+        "\n",
+        "# DataFrame con strings e Índices personalizados\n",
+        "df_productos = pd.DataFrame({\n",
+        "    'Bob': ['Me gusta.', 'Horroroso.'],\n",
+        "    'Sue': ['Muy bien.', 'Un poco soso.']\n",
+        "}, index=['Producto A', 'Producto B'])\n",
+        "\n",
+        "print(\"\\nDF con Índices:\\n\", df_productos)\n",
+        "\n",
+        "# ------------------------------------------\n",
+        "# 3. Creación de Series\n",
+        "# ------------------------------------------\n",
+        "print(\"\\n--- Creando Series ---\")\n",
+        "\n",
+        "serie_ventas = pd.Series([30, 35, 40],\n",
+        "                         index=['Ventas 2015', 'Ventas 2016', 'Ventas 2017'],\n",
+        "                         name='Producto A')\n",
+        "print(serie_ventas)\n",
+        "\n",
+        "# ------------------------------------------\n",
+        "# 4. Lectura de Datasets y Exploración\n",
+        "# ------------------------------------------\n",
+        "# NOTA: Como no tengo tu archivo \"ryanair_reviews.csv\",\n",
+        "# voy a crear uno ficticio para que el código no falle.\n",
+        "\n",
+        "# Creamos un CSV de prueba\n",
+        "df_prueba = pd.DataFrame({\n",
+        "    'ID': [1, 2, 3],\n",
+        "    'Review': ['Excelente', 'Mal servicio', 'Normal'],\n",
+        "    'Puntaje': [10, 2, 5]\n",
+        "})\n",
+        "df_prueba.to_csv('ejemplo_ryanair.csv', index=False)\n",
+        "\n",
+        "print(\"\\n--- Lectura y Exploración ---\")\n",
+        "\n",
+        "# Leer el dataset\n",
+        "df_leido = pd.read_csv(\"ejemplo_ryanair.csv\")\n",
+        "\n",
+        "# Exploración básica\n",
+        "print(\"Tamaño (Filas, Columnas):\", df_leido.shape)\n",
+        "print(\"\\nPrimeras filas:\\n\", df_leido.head())\n",
+        "\n",
+        "# Leer especificando la columna de índice (si el CSV ya tiene una)\n",
+        "# df_leido = pd.read_csv(\"ejemplo_ryanair.csv\", index_col=0)\n",
+        "\n",
+        "# ------------------------------------------\n",
+        "# 5. Escritura de DataFrame a CSV\n",
+        "# ------------------------------------------\n",
+        "print(\"\\n--- Guardando el archivo ---\")\n",
+        "\n",
+        "# Guardamos el dataframe modificado\n",
+        "df_leido.to_csv(\"resultado_final.csv\", index=False)\n",
+        "\n",
+        "print(\"¡Archivo 'resultado_final.csv' guardado con éxito en la carpeta de archivos de Colab!\")\n",
+        "\n",
+        "# TIP ADICIONAL: Cómo descargar el archivo a tu PC desde Colab\n",
+        "from google.colab import files\n",
+        "# Descomenta la siguiente línea si quieres que se descargue automáticamente:\n",
+        "# files.download('resultado_final.csv')"
+      ],
+      "metadata": {
+        "id": "vBYufjZNZNCS",
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "outputId": "4f4e6ccc-aad7-4a96-bb4a-483f28723ff3"
+      },
+      "execution_count": 8,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Requirement already satisfied: pandas in /usr/local/lib/python3.12/dist-packages (2.2.2)\n",
+            "Requirement already satisfied: numpy>=1.26.0 in /usr/local/lib/python3.12/dist-packages (from pandas) (2.0.2)\n",
+            "Requirement already satisfied: python-dateutil>=2.8.2 in /usr/local/lib/python3.12/dist-packages (from pandas) (2.9.0.post0)\n",
+            "Requirement already satisfied: pytz>=2020.1 in /usr/local/lib/python3.12/dist-packages (from pandas) (2025.2)\n",
+            "Requirement already satisfied: tzdata>=2022.7 in /usr/local/lib/python3.12/dist-packages (from pandas) (2025.3)\n",
+            "Requirement already satisfied: six>=1.5 in /usr/local/lib/python3.12/dist-packages (from python-dateutil>=2.8.2->pandas) (1.17.0)\n",
+            "--- Creando DataFrames ---\n",
+            "DF Simple:\n",
+            "    Yes   No\n",
+            "0   50  131\n",
+            "1   21    2\n",
+            "\n",
+            "DF con Índices:\n",
+            "                    Bob            Sue\n",
+            "Producto A   Me gusta.      Muy bien.\n",
+            "Producto B  Horroroso.  Un poco soso.\n",
+            "\n",
+            "--- Creando Series ---\n",
+            "Ventas 2015    30\n",
+            "Ventas 2016    35\n",
+            "Ventas 2017    40\n",
+            "Name: Producto A, dtype: int64\n",
+            "\n",
+            "--- Lectura y Exploración ---\n",
+            "Tamaño (Filas, Columnas): (3, 3)\n",
+            "\n",
+            "Primeras filas:\n",
+            "    ID        Review  Puntaje\n",
+            "0   1     Excelente       10\n",
+            "1   2  Mal servicio        2\n",
+            "2   3        Normal        5\n",
+            "\n",
+            "--- Guardando el archivo ---\n",
+            "¡Archivo 'resultado_final.csv' guardado con éxito en la carpeta de archivos de Colab!\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "ACTIVIDAD 2"
+      ],
+      "metadata": {
+        "id": "cf5muP8hcJ5R"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import pandas as pd\n",
+        "\n",
+        "# 1. Crear un Dataframe\n",
+        "try:\n",
+        "    # Intenta leer el archivo (asegúrate de haberlo subido a la carpeta de Colab)\n",
+        "    df = pd.read_csv('datos_casas_india.csv')\n",
+        "    print(\"✅ 1. Dataframe creado con éxito.\")\n",
+        "\n",
+        "    # --- Identificación automática de columnas ---\n",
+        "    # Esto busca nombres comunes para evitar errores de \"KeyError\"\n",
+        "    posibles_precios = ['precio', 'price', 'Price', 'Amount']\n",
+        "    posibles_direcciones = ['direccion', 'address', 'Address', 'Location']\n",
+        "\n",
+        "    col_precio = next((c for c in posibles_precios if c in df.columns), df.columns[0])\n",
+        "    col_direccion = next((c for c in posibles_direcciones if c in df.columns), df.columns[-1])\n",
+        "\n",
+        "except FileNotFoundError:\n",
+        "    print(\"❌ Error: No se encontró 'datos_casas_india.csv'. Súbelo a la carpeta de archivos.\")\n",
+        "\n",
+        "# 2. Dar toda la información\n",
+        "print(\"\\n--- 2. Información General ---\")\n",
+        "df.info()\n",
+        "print(\"\\nVista previa de los datos:\")\n",
+        "display(df.head())\n",
+        "\n",
+        "# 3. Crear una máscara y filtrar por precio >= 10,000\n",
+        "mascara = df[col_precio] >= 10000\n",
+        "df_filtrado = df[mascara]\n",
+        "print(f\"\\n✅ 3. Máscara aplicada sobre la columna: '{col_precio}'\")\n",
+        "\n",
+        "# 4. ¿Cuántas son inferiores a 10,000?\n",
+        "cantidad_inferiores = len(df[df[col_precio] < 10000])\n",
+        "print(f\"\\n📊 4. Cantidad de casas con precio < 10,000: {cantidad_inferiores}\")\n",
+        "\n",
+        "# 5. Crear un nuevo Dataframe a partir de los valores >= 10,000\n",
+        "df_caras = df[df[col_precio] >= 10000].copy()\n",
+        "print(\"\\n✅ 5. Nuevo Dataframe 'df_caras' generado.\")\n",
+        "\n",
+        "# 6. Dar toda la información (del nuevo Dataframe)\n",
+        "print(\"\\n--- 6. Información del Dataframe de casas caras ---\")\n",
+        "df_caras.info()\n",
+        "display(df_caras.describe())\n",
+        "\n",
+        "# 7. Crear una serie con todas las direcciones de las casas >= 10,000\n",
+        "serie_direcciones = df_caras[col_direccion]\n",
+        "print(f\"\\n📍 7. Serie de direcciones extraída de la columna: '{col_direccion}'\")\n",
+        "print(serie_direcciones.head())"
+      ],
+      "metadata": {
+        "id": "4Ung1ichcyd1"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import pandas as pd\n",
+        "\n",
+        "# 1. Crear un Dataframe\n",
+        "df = pd.read_csv('datos_casas_india.csv')\n",
+        "print(\"1. Dataframe cargado.\")\n",
+        "\n",
+        "# 2. Dar toda la información\n",
+        "print(\"\\n2. Información del Dataframe original:\")\n",
+        "df.info()\n",
+        "display(df.head())\n",
+        "\n",
+        "# 3. Crear una máscara y filtrar por precio >= 10,000\n",
+        "mascara = df['precio'] >= 10000\n",
+        "df_filtrado = df[mascara]\n",
+        "print(\"\\n3. Filtro >= 10,000 aplicado.\")\n",
+        "\n",
+        "# 4. ¿Cuántas son inferiores a 10,000?\n",
+        "inferiores = df[df['precio'] < 10000].shape[0]\n",
+        "print(f\"\\n4. Cantidad de casas inferiores a 10,000: {inferiores}\")\n",
+        "\n",
+        "# 5. Crear un nuevo Dataframe a partir de los valores >= 10,000\n",
+        "df_caras = df[df['precio'] >= 10000].copy()\n",
+        "print(\"\\n5. Nuevo Dataframe 'df_caras' creado.\")\n",
+        "\n",
+        "# 6. Dar toda la información (del nuevo Dataframe)\n",
+        "print(\"\\n6. Información del nuevo Dataframe:\")\n",
+        "df_caras.info()\n",
+        "\n",
+        "# 7. Crear una serie con todas las direcciones de las casas >= 10,000\n",
+        "serie_direcciones = df_caras['direccion']\n",
+        "print(\"\\n7. Serie de direcciones creada:\")\n",
+        "print(serie_direcciones.head())"
+      ],
+      "metadata": {
+        "id": "lqMI7fJPgji8"
+      },
+      "execution_count": null,
+      "outputs": []
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "display_name": "Python 3",
+      "language": "python",
+      "name": "python3"
+    },
+    "language_info": {
+      "codemirror_mode": {
+        "name": "ipython",
+        "version": 3
+      },
+      "file_extension": ".py",
+      "mimetype": "text/x-python",
+      "name": "python",
+      "nbconvert_exporter": "python",
+      "pygments_lexer": "ipython3",
+      "version": "3.9.9"
+    },
+    "orig_nbformat": 4,
+    "colab": {
+      "provenance": [],
+      "include_colab_link": true
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 0
+}
